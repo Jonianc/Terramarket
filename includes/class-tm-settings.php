@@ -66,14 +66,17 @@ class TM_Settings
     public static function sanitize_general(array $input): array
     {
         $current = get_option('tm_settings_general', array());
-        $from_email = sanitize_email($input['from_email'] ?? ($current['from_email'] ?? get_option('admin_email')));
-        if ($from_email && ! is_email($from_email)) {
+
+        $from_email_raw = (string) ($input['from_email'] ?? ($current['from_email'] ?? get_option('admin_email')));
+        $from_email = sanitize_email($from_email_raw);
+        if ('' !== trim($from_email_raw) && ! is_email($from_email_raw)) {
             $from_email = sanitize_email($current['from_email'] ?? get_option('admin_email'));
             self::add_notice('tm_invalid_from_email', __('El email remitente no es válido. Se mantiene el valor anterior.', 'terramarket'));
         }
 
-        $notify_email = sanitize_email($input['notify_email'] ?? ($current['notify_email'] ?? get_option('admin_email')));
-        if ($notify_email && ! is_email($notify_email)) {
+        $notify_email_raw = (string) ($input['notify_email'] ?? ($current['notify_email'] ?? get_option('admin_email')));
+        $notify_email = sanitize_email($notify_email_raw);
+        if ('' !== trim($notify_email_raw) && ! is_email($notify_email_raw)) {
             $notify_email = sanitize_email($current['notify_email'] ?? get_option('admin_email'));
             self::add_notice('tm_invalid_notify_email', __('El email de notificaciones no es válido. Se mantiene el valor anterior.', 'terramarket'));
         }
