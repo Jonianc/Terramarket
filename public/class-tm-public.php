@@ -1014,6 +1014,18 @@ class TM_Public
             'price_min'           => absint($_POST['tm_alert_price_min'] ?? 0),
             'price_max'           => absint($_POST['tm_alert_price_max'] ?? 0),
         );
+        $category_term_id = (int) $data['category_term_id'];
+        $subcategory_term_id = (int) $data['subcategory_term_id'];
+        $region_term_id = (int) $data['region_term_id'];
+        $comuna_term_id = (int) $data['comuna_term_id'];
+        if ($subcategory_term_id > 0 && $category_term_id > 0 && ! TM_Helpers::is_subcategory_of_category($subcategory_term_id, $category_term_id)) {
+            wp_safe_redirect(TM_Helpers::get_account_page_url(array('tab' => 'alerts', 'tm_error' => 'invalid_terms')));
+            exit;
+        }
+        if ($comuna_term_id > 0 && $region_term_id > 0 && ! TM_Helpers::is_comuna_of_region($comuna_term_id, $region_term_id)) {
+            wp_safe_redirect(TM_Helpers::get_account_page_url(array('tab' => 'alerts', 'tm_error' => 'invalid_terms')));
+            exit;
+        }
         $has_filter = false;
         foreach ($data as $key => $value) {
             if (! empty($value)) {
@@ -1116,6 +1128,10 @@ class TM_Public
         }
         if (! is_email($contact_email)) {
             wp_safe_redirect(TM_Helpers::build_redirect_url($redirect_url, array('tm_error' => 'invalid_email')));
+            exit;
+        }
+        if (! TM_Helpers::is_subcategory_of_category($subcategory_id, $category_id) || ! TM_Helpers::is_comuna_of_region($comuna_id, $region_id)) {
+            wp_safe_redirect(TM_Helpers::build_redirect_url($redirect_url, array('tm_error' => 'invalid_terms')));
             exit;
         }
         $existing_count = $is_edit ? TM_Helpers::get_listing_image_count($listing_id) : 0;
@@ -1468,6 +1484,7 @@ class TM_Public
             'lead_sent'        => __('Tu mensaje fue enviado al vendedor.', 'terramarket'),
             'missing_fields'   => __('Completa todos los campos obligatorios.', 'terramarket'),
             'invalid_email'    => __('El email de contacto no es válido.', 'terramarket'),
+            'invalid_terms'    => __('La combinación de categoría/subcategoría o región/comuna no es válida.', 'terramarket'),
             'image_required'   => __('Debes mantener al menos una imagen.', 'terramarket'),
             'too_many_images'  => __('Superaste el máximo de imágenes permitidas.', 'terramarket'),
             'save_failed'      => __('No se pudo guardar el aviso.', 'terramarket'),

@@ -16,6 +16,15 @@ $general = get_option('tm_settings_general', array());
             </td>
         </tr>
         <tr>
+            <th scope="row"><?php esc_html_e('Accesos rápidos', 'terramarket'); ?></th>
+            <td>
+                <p><a href="<?php echo esc_url(TM_Helpers::get_market_url()); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Abrir marketplace', 'terramarket'); ?></a> <code><?php echo esc_html(TM_Helpers::get_market_url()); ?></code></p>
+                <p><a href="<?php echo esc_url(TM_Helpers::get_submit_page_url()); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Abrir publicar', 'terramarket'); ?></a> <code><?php echo esc_html(TM_Helpers::get_submit_page_url()); ?></code></p>
+                <p><a href="<?php echo esc_url(TM_Helpers::get_account_page_url()); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Abrir mi cuenta', 'terramarket'); ?></a> <code><?php echo esc_html(TM_Helpers::get_account_page_url()); ?></code></p>
+                <p><a href="<?php echo esc_url(TM_Helpers::get_auth_page_url()); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Abrir acceso', 'terramarket'); ?></a> <code><?php echo esc_html(TM_Helpers::get_auth_page_url()); ?></code></p>
+            </td>
+        </tr>
+        <tr>
             <th scope="row"><label for="tm_listings_per_page"><?php esc_html_e('Avisos por página', 'terramarket'); ?></label></th>
             <td><input class="small-text" type="number" id="tm_listings_per_page" name="tm_settings_general[listings_per_page]" value="<?php echo esc_attr((string) ($general['listings_per_page'] ?? 16)); ?>" min="1"></td>
         </tr>
