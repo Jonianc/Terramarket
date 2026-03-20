@@ -35,7 +35,12 @@ class TM_Alerts
         global $wpdb;
 
         $table = $wpdb->prefix . 'tm_alerts';
-        $alerts = $wpdb->get_results("SELECT * FROM {$table} WHERE is_active = 1 AND frequency = 'daily' ORDER BY id ASC LIMIT 500");
+        $alerts = $wpdb->get_results($wpdb->prepare(
+            "SELECT * FROM {$table} WHERE is_active = %d AND frequency = %s ORDER BY id ASC LIMIT %d",
+            1,
+            'daily',
+            500
+        ));
         if (! $alerts) {
             return;
         }

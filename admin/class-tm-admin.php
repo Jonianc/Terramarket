@@ -251,8 +251,8 @@ class TM_Admin
         $published = $listing_count && isset($listing_count->publish) ? (int) $listing_count->publish : 0;
         $drafts = $listing_count && isset($listing_count->draft) ? (int) $listing_count->draft : 0;
         $lead_count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}tm_leads");
-        $alert_count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}tm_alerts WHERE is_active = 1");
-        $vitrine_count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}tm_vitrine_items WHERE is_active = 1");
+        $alert_count = (int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}tm_alerts WHERE is_active = %d", 1));
+        $vitrine_count = (int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}tm_vitrine_items WHERE is_active = %d", 1));
         $commission_count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}tm_commission_events");
         ?>
         <div class="wrap tm-wrap">
@@ -291,7 +291,7 @@ class TM_Admin
         }
         global $wpdb;
         $table = $wpdb->prefix . 'tm_leads';
-        $rows = $wpdb->get_results("SELECT * FROM {$table} ORDER BY created_at DESC LIMIT 200");
+        $rows = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$table} ORDER BY created_at DESC LIMIT %d", 200));
         ?>
         <div class="wrap tm-wrap">
             <h1><?php esc_html_e('Leads', 'terramarket'); ?></h1>
@@ -326,7 +326,7 @@ class TM_Admin
         }
         global $wpdb;
         $table = $wpdb->prefix . 'tm_vitrine_items';
-        $active_rows = $wpdb->get_results("SELECT * FROM {$table} WHERE is_active = 1 ORDER BY sort_order ASC, id ASC");
+        $active_rows = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$table} WHERE is_active = %d ORDER BY sort_order ASC, id ASC", 1));
         $selected_ids = array();
         foreach ((array) $active_rows as $row) {
             $selected_ids[(int) $row->sort_order] = (int) $row->listing_id;
@@ -376,7 +376,7 @@ class TM_Admin
         }
         global $wpdb;
         $table = $wpdb->prefix . 'tm_commission_events';
-        $rows = $wpdb->get_results("SELECT * FROM {$table} ORDER BY created_at DESC LIMIT 200");
+        $rows = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$table} ORDER BY created_at DESC LIMIT %d", 200));
         ?>
         <div class="wrap tm-wrap">
             <h1><?php esc_html_e('Cierres y comisiones', 'terramarket'); ?></h1>
