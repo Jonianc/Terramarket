@@ -39,3 +39,21 @@
 }
 .tm-admin-table th, .tm-admin-table td { vertical-align: top; }
 .tm-table-wrap { overflow-x: auto; }
+
+.tm-media-preview-wrap {
+    margin-top: 10px;
+}
+
+.tm-media-preview {
+    display: block;
+    max-width: 120px;
+    height: auto;
+    border: 1px solid #dcdcde;
+    border-radius: 6px;
+    padding: 2px;
+    background: #fff;
+}
+
+.tm-media-preview.is-hidden {
+    display: none;
+}

@@ -52,6 +52,7 @@ class TM_Admin
         $current_page = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
         $current_tab  = isset($_GET['tab']) ? sanitize_key(wp_unslash($_GET['tab'])) : '';
         if ('tm-settings' === $current_page && 'branding' === $current_tab) {
+            wp_enqueue_media();
             wp_enqueue_style('wp-color-picker');
             wp_enqueue_script('wp-color-picker');
         }

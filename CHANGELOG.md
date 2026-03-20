@@ -2,6 +2,10 @@
 
 Todos los cambios relevantes de este plugin se documentan en este archivo.
 
+## [1.5.7] - 2026-03-20
+- UI/UX admin (Branding): selector de medios nativo para `logo_id` y `watermark_logo_id` (seleccionar/quitar) conservando almacenamiento por ID.
+- Vista previa de imagen en Ajustes > Branding para logo principal y watermark.
+
 ## [1.5.6] - 2026-03-20
 - UI/UX admin (Branding): integración de `wp-color-picker` para los campos de color en Ajustes > Branding.
 - Carga condicional de assets del color picker solo en `admin.php?page=tm-settings&tab=branding`.
