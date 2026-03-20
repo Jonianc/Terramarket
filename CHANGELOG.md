@@ -2,6 +2,10 @@
 
 Todos los cambios relevantes de este plugin se documentan en este archivo.
 
+## [1.5.9] - 2026-03-20
+- UI/UX admin (Ajustes): reorganización visual de formularios en secciones para General, Branding y Marketplace.
+- Mejora de espaciado/jerarquía visual en tablas de ajustes sin cambios en keys ni flujo de guardado.
+
 ## [1.5.8] - 2026-03-20
 - Bugfix settings: `sanitize_general()` ahora valida `from_email` y `notify_email` usando el valor raw para evitar que entradas inválidas (ej. `foo`) se guarden como vacío.
 - En caso inválido no vacío, se mantiene el valor anterior y se muestra notice de validación.
