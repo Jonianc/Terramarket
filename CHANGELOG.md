@@ -2,6 +2,9 @@
 
 Todos los cambios relevantes de este plugin se documentan en este archivo.
 
+## [1.5.4] - 2026-03-20
+- Bugfix: se elimina whitespace inicial en `includes/class-tm-seeder.php` que generaba salida inesperada en activación.
+
 ## [1.5.3] - 2026-03-20
 - Se agrega `QA_CHECKLIST.md` con verificación manual operativa y de regresión.
 - Se referencia checklist para estandarizar validación post-cambio.

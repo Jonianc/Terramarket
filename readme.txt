@@ -3,7 +3,7 @@ Contributors: openai
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.5.3
+Stable tag: 1.5.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,6 +11,9 @@ Marketplace agro autónomo para WordPress.
 
 == Description ==
 Terramarket es un plugin base para construir un marketplace agro en WordPress.
+
+Versión 1.5.4:
+- corrección de salida inesperada en activación eliminando espacios antes de `<?php` en class-tm-seeder.php.
 
 Versión 1.5.3:
 - se agrega QA_CHECKLIST.md con guía de validación manual y regresión básica.
@@ -63,6 +66,9 @@ Versión 1.1.0 (Bloque B):
 4. Usa el frontend standalone en `/{slug-base}/`.
 
 == Changelog ==
+= 1.5.4 =
+* Bugfix: elimina 4 caracteres de salida inesperada en activación (whitespace inicial en seeder).
+
 = 1.5.3 =
 * Documentación operativa: checklist manual de QA/regresión en QA_CHECKLIST.md.
 
