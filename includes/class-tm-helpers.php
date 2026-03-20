@@ -106,6 +106,38 @@ class TM_Helpers
         return ($term && ! is_wp_error($term)) ? $term->name : '';
     }
 
+    public static function is_subcategory_of_category(int $subcategory_id, int $category_id): bool
+    {
+        if ($subcategory_id < 1 || $category_id < 1) {
+            return false;
+        }
+
+        $subcategory = get_term($subcategory_id, 'tm_subcategory');
+        $category = get_term($category_id, 'tm_category');
+        if (! ($subcategory instanceof WP_Term) || ! ($category instanceof WP_Term)) {
+            return false;
+        }
+
+        $parent_category_id = (int) get_term_meta($subcategory_id, 'tm_parent_category_id', true);
+        return $parent_category_id > 0 && $parent_category_id === $category_id;
+    }
+
+    public static function is_comuna_of_region(int $comuna_id, int $region_id): bool
+    {
+        if ($comuna_id < 1 || $region_id < 1) {
+            return false;
+        }
+
+        $comuna = get_term($comuna_id, 'tm_comuna');
+        $region = get_term($region_id, 'tm_region');
+        if (! ($comuna instanceof WP_Term) || ! ($region instanceof WP_Term)) {
+            return false;
+        }
+
+        $linked_region_id = (int) get_term_meta($comuna_id, 'tm_region_id', true);
+        return $linked_region_id > 0 && $linked_region_id === $region_id;
+    }
+
     public static function get_listing_statuses(): array
     {
         return array(
@@ -260,6 +292,27 @@ class TM_Helpers
         }
 
         return $normalized;
+    }
+
+    public static function debug_log(string $event, array $context = array()): void
+    {
+        if (! defined('WP_DEBUG') || ! WP_DEBUG) {
+            return;
+        }
+
+        $safe_context = array();
+        foreach ($context as $key => $value) {
+            if (is_scalar($value) || null === $value) {
+                $safe_context[(string) $key] = $value;
+            }
+        }
+
+        $encoded = wp_json_encode($safe_context);
+        if (! is_string($encoded)) {
+            $encoded = '{}';
+        }
+
+        error_log('[Terramarket][' . sanitize_key($event) . '] ' . $encoded); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
     }
 
     public static function get_submit_form_url(): string

@@ -35,7 +35,12 @@ class TM_Alerts
         global $wpdb;
 
         $table = $wpdb->prefix . 'tm_alerts';
-        $alerts = $wpdb->get_results("SELECT * FROM {$table} WHERE is_active = 1 AND frequency = 'daily' ORDER BY id ASC LIMIT 500");
+        $alerts = $wpdb->get_results($wpdb->prepare(
+            "SELECT * FROM {$table} WHERE is_active = %d AND frequency = %s ORDER BY id ASC LIMIT %d",
+            1,
+            'daily',
+            500
+        ));
         if (! $alerts) {
             return;
         }
@@ -52,11 +57,13 @@ class TM_Alerts
         $alert_id = (int) ($alert->id ?? 0);
         $user_id  = (int) ($alert->user_id ?? 0);
         if (! $alert_id || ! $user_id) {
+            TM_Helpers::debug_log('alerts_invalid_payload', array('alert_id' => $alert_id, 'user_id' => $user_id));
             return false;
         }
 
         $user = get_userdata($user_id);
         if (! $user || ! is_email($user->user_email)) {
+            TM_Helpers::debug_log('alerts_invalid_user', array('alert_id' => $alert_id, 'user_id' => $user_id));
             return false;
         }
 
@@ -108,6 +115,8 @@ class TM_Alerts
                 array('%s', '%s'),
                 array('%d')
             );
+        } else {
+            TM_Helpers::debug_log('alerts_mail_failed', array('alert_id' => $alert_id, 'user_id' => $user_id));
         }
 
         return (bool) $sent;

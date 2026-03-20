@@ -3,7 +3,7 @@ Contributors: openai
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.4.0
+Stable tag: 1.5.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,6 +11,26 @@ Marketplace agro autónomo para WordPress.
 
 == Description ==
 Terramarket es un plugin base para construir un marketplace agro en WordPress.
+
+Versión 1.5.4:
+- corrección de salida inesperada en activación eliminando espacios antes de `<?php` en class-tm-seeder.php.
+
+Versión 1.5.3:
+- se agrega QA_CHECKLIST.md con guía de validación manual y regresión básica.
+
+Versión 1.5.2:
+- logging técnico mínimo bajo WP_DEBUG para eventos críticos (alertas, permisos y uploads).
+
+Versión 1.5.1:
+- hardening SQL preventivo en consultas admin/alertas usando prepare cuando aplica.
+- se agrega archivo CHANGELOG.md para trazabilidad de versiones.
+
+Versión 1.5.0:
+- validación server-side de consistencia categoría/subcategoría y región/comuna en guardado de avisos y alertas.
+- accesos rápidos en ajustes generales para abrir rutas públicas del marketplace.
+
+Versión 1.4.1:
+- endurecimiento de permisos por capability en operaciones de vendedor y alertas.
 
 Versión 1.4.0 (Bloque E):
 - pulido UI/UX del frontend standalone
@@ -46,6 +66,25 @@ Versión 1.1.0 (Bloque B):
 4. Usa el frontend standalone en `/{slug-base}/`.
 
 == Changelog ==
+= 1.5.4 =
+* Bugfix: elimina 4 caracteres de salida inesperada en activación (whitespace inicial en seeder).
+
+= 1.5.3 =
+* Documentación operativa: checklist manual de QA/regresión en QA_CHECKLIST.md.
+
+= 1.5.2 =
+* Observabilidad: logs técnicos mínimos condicionados a WP_DEBUG para fallos críticos.
+
+= 1.5.1 =
+* Hardening SQL preventivo en consultas admin/alertas y trazabilidad con CHANGELOG.md.
+
+= 1.5.0 =
+* Seguridad e integridad: validación relacional de términos en avisos/alertas.
+* Admin UX: accesos rápidos a rutas frontend desde Ajustes > Generales.
+
+= 1.4.1 =
+* Seguridad: validación explícita de capabilities en guardar/gestionar avisos y alertas de usuario.
+
 = 1.4.0 =
 * Bloque E: pulido UI/UX, responsive fino, accesibilidad base y mejoras de rendimiento.
 
