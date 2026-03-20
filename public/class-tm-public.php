@@ -893,6 +893,11 @@ class TM_Public
         if (! wp_verify_nonce($nonce_value, 'tm_manage_listing_' . $listing_id . '_' . $operation)) {
             wp_die(esc_html__('Nonce inválido.', 'terramarket'));
         }
+        $required_cap = self::required_capability_for_listing_operation($operation);
+        if (! $required_cap || ! current_user_can($required_cap)) {
+            wp_safe_redirect(TM_Helpers::get_account_page_url(array('tm_error' => 'no_permission')));
+            exit;
+        }
 
         $notice = 'listing_updated';
         switch ($operation) {
@@ -992,6 +997,10 @@ class TM_Public
             wp_safe_redirect(TM_Helpers::get_auth_page_url(array('redirect_to' => TM_Helpers::get_account_page_url(array('tab' => 'alerts')))));
             exit;
         }
+        if (! current_user_can('tm_manage_own_alerts')) {
+            wp_safe_redirect(TM_Helpers::get_account_page_url(array('tab' => 'alerts', 'tm_error' => 'no_permission')));
+            exit;
+        }
         $nonce = sanitize_text_field(wp_unslash($_POST['tm_save_alert_nonce'] ?? ''));
         if (! wp_verify_nonce($nonce, 'tm_save_alert')) {
             wp_die(esc_html__('Nonce inválido.', 'terramarket'));
@@ -1025,6 +1034,10 @@ class TM_Public
     {
         if (! is_user_logged_in()) {
             wp_safe_redirect(TM_Helpers::get_auth_page_url(array('redirect_to' => TM_Helpers::get_account_page_url(array('tab' => 'alerts')))));
+            exit;
+        }
+        if (! current_user_can('tm_manage_own_alerts')) {
+            wp_safe_redirect(TM_Helpers::get_account_page_url(array('tab' => 'alerts', 'tm_error' => 'no_permission')));
             exit;
         }
         $alert_id = absint($_POST['tm_alert_id'] ?? 0);
@@ -1072,6 +1085,11 @@ class TM_Public
         $user_id = get_current_user_id();
         $listing_id = absint($_POST['tm_listing_id'] ?? 0);
         $is_edit = $listing_id > 0;
+        $required_cap = $is_edit ? 'tm_edit_own_listings' : 'tm_create_listings';
+        if (! current_user_can($required_cap)) {
+            wp_safe_redirect(TM_Helpers::build_redirect_url($redirect_url, array('tm_error' => 'no_permission')));
+            exit;
+        }
         if ($is_edit && ! TM_Helpers::is_listing_owner($listing_id, $user_id)) {
             wp_safe_redirect(TM_Helpers::build_redirect_url($redirect_url, array('tm_error' => 'no_permission')));
             exit;
@@ -1466,5 +1484,21 @@ class TM_Public
             'logged_out'       => __('Sesión cerrada correctamente.', 'terramarket'),
         );
         return $map[$code] ?? $code;
+    }
+
+    protected static function required_capability_for_listing_operation(string $operation): string
+    {
+        switch ($operation) {
+            case 'pause':
+                return 'tm_pause_own_listings';
+            case 'sold':
+                return 'tm_mark_own_listings_sold';
+            case 'activate':
+            case 'renew':
+            case 'duplicate':
+                return 'tm_edit_own_listings';
+            default:
+                return '';
+        }
     }
 }
