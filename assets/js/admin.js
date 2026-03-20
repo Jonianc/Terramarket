@@ -1,4 +1,8 @@
 jQuery(function ($) {
+  if ($.fn.wpColorPicker && $('.tm-color-field').length) {
+    $('.tm-color-field').wpColorPicker();
+  }
+
   const categorySelect = $('#tm_category_term_id');
   const subcategorySelect = $('#tm_subcategory_term_id');
   const regionSelect = $('#tm_region_term_id');

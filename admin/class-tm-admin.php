@@ -48,6 +48,13 @@ class TM_Admin
 
         wp_enqueue_style('tm-admin', TM_PLUGIN_URL . 'assets/css/admin.css', array(), TM_VERSION);
         wp_enqueue_script('tm-admin', TM_PLUGIN_URL . 'assets/js/admin.js', array('jquery'), TM_VERSION, true);
+
+        $current_page = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
+        $current_tab  = isset($_GET['tab']) ? sanitize_key(wp_unslash($_GET['tab'])) : '';
+        if ('tm-settings' === $current_page && 'branding' === $current_tab) {
+            wp_enqueue_style('wp-color-picker');
+            wp_enqueue_script('wp-color-picker');
+        }
     }
 
     public static function register_listing_meta_boxes(): void
@@ -412,9 +419,14 @@ class TM_Admin
         if (! in_array($tab, $allowed, true)) {
             $tab = 'general';
         }
+
+        if (isset($_GET['settings-updated'])) {
+            add_settings_error('tm_settings', 'tm_settings_saved', __('Ajustes guardados.', 'terramarket'), 'updated');
+        }
         ?>
         <div class="wrap tm-wrap">
             <h1><?php esc_html_e('Ajustes Terramarket', 'terramarket'); ?></h1>
+            <?php settings_errors('tm_settings'); ?>
             <nav class="nav-tab-wrapper">
                 <a href="<?php echo esc_url(admin_url('admin.php?page=tm-settings&tab=general')); ?>" class="nav-tab <?php echo 'general' === $tab ? 'nav-tab-active' : ''; ?>"><?php esc_html_e('Generales', 'terramarket'); ?></a>
                 <a href="<?php echo esc_url(admin_url('admin.php?page=tm-settings&tab=branding')); ?>" class="nav-tab <?php echo 'branding' === $tab ? 'nav-tab-active' : ''; ?>"><?php esc_html_e('Branding', 'terramarket'); ?></a>

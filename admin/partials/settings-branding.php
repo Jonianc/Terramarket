@@ -14,15 +14,15 @@ $branding = get_option('tm_settings_branding', array());
         </tr>
         <tr>
             <th scope="row"><label for="tm_primary_color"><?php esc_html_e('Color primario', 'terramarket'); ?></label></th>
-            <td><input type="text" id="tm_primary_color" name="tm_settings_branding[primary_color]" value="<?php echo esc_attr($branding['primary_color'] ?? '#ffe600'); ?>" class="regular-text"></td>
+            <td><input type="text" id="tm_primary_color" name="tm_settings_branding[primary_color]" value="<?php echo esc_attr($branding['primary_color'] ?? '#ffe600'); ?>" class="regular-text tm-color-field"></td>
         </tr>
         <tr>
             <th scope="row"><label for="tm_secondary_color"><?php esc_html_e('Color secundario', 'terramarket'); ?></label></th>
-            <td><input type="text" id="tm_secondary_color" name="tm_settings_branding[secondary_color]" value="<?php echo esc_attr($branding['secondary_color'] ?? '#34835a'); ?>" class="regular-text"></td>
+            <td><input type="text" id="tm_secondary_color" name="tm_settings_branding[secondary_color]" value="<?php echo esc_attr($branding['secondary_color'] ?? '#34835a'); ?>" class="regular-text tm-color-field"></td>
         </tr>
         <tr>
             <th scope="row"><label for="tm_button_color"><?php esc_html_e('Color botones', 'terramarket'); ?></label></th>
-            <td><input type="text" id="tm_button_color" name="tm_settings_branding[button_color]" value="<?php echo esc_attr($branding['button_color'] ?? '#3483fa'); ?>" class="regular-text"></td>
+            <td><input type="text" id="tm_button_color" name="tm_settings_branding[button_color]" value="<?php echo esc_attr($branding['button_color'] ?? '#3483fa'); ?>" class="regular-text tm-color-field"></td>
         </tr>
     </table>
     <?php submit_button(__('Guardar branding', 'terramarket')); ?>

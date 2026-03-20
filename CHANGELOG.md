@@ -2,6 +2,14 @@
 
 Todos los cambios relevantes de este plugin se documentan en este archivo.
 
+## [1.5.6] - 2026-03-20
+- UI/UX admin (Branding): integración de `wp-color-picker` para los campos de color en Ajustes > Branding.
+- Carga condicional de assets del color picker solo en `admin.php?page=tm-settings&tab=branding`.
+
+## [1.5.5] - 2026-03-20
+- UI/UX admin (Ajustes): se muestran notices explícitos de guardado en `Ajustes`.
+- Validación con feedback: emails inválidos, comisión por defecto no numérica/fuera de rango y posición de watermark inválida mantienen valor anterior y muestran mensaje.
+
 ## [1.5.4] - 2026-03-20
 - Bugfix: se elimina whitespace inicial en `includes/class-tm-seeder.php` que generaba salida inesperada en activación.
 
