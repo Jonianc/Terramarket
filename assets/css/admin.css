@@ -1,0 +1,41 @@
+.tm-wrap .tm-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+}
+
+.tm-wrap .tm-card,
+.tm-wrap .tm-settings-form {
+    background: #fff;
+    border: 1px solid #dcdcde;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    max-width: 1100px;
+}
+
+.tm-admin-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.tm-field label {
+    display: block;
+    margin-bottom: 6px;
+}
+
+.tm-tools-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+@media (max-width: 782px) {
+    .tm-admin-grid {
+        grid-template-columns: 1fr;
+    }
+}
+.tm-admin-table th, .tm-admin-table td { vertical-align: top; }
+.tm-table-wrap { overflow-x: auto; }
