@@ -895,6 +895,7 @@ class TM_Public
         }
         $required_cap = self::required_capability_for_listing_operation($operation);
         if (! $required_cap || ! current_user_can($required_cap)) {
+            TM_Helpers::debug_log('manage_listing_denied', array('listing_id' => $listing_id, 'operation' => $operation, 'required_cap' => $required_cap, 'user_id' => get_current_user_id()));
             wp_safe_redirect(TM_Helpers::get_account_page_url(array('tm_error' => 'no_permission')));
             exit;
         }
@@ -1019,10 +1020,12 @@ class TM_Public
         $region_term_id = (int) $data['region_term_id'];
         $comuna_term_id = (int) $data['comuna_term_id'];
         if ($subcategory_term_id > 0 && $category_term_id > 0 && ! TM_Helpers::is_subcategory_of_category($subcategory_term_id, $category_term_id)) {
+            TM_Helpers::debug_log('alert_invalid_terms', array('category_term_id' => $category_term_id, 'subcategory_term_id' => $subcategory_term_id, 'user_id' => get_current_user_id()));
             wp_safe_redirect(TM_Helpers::get_account_page_url(array('tab' => 'alerts', 'tm_error' => 'invalid_terms')));
             exit;
         }
         if ($comuna_term_id > 0 && $region_term_id > 0 && ! TM_Helpers::is_comuna_of_region($comuna_term_id, $region_term_id)) {
+            TM_Helpers::debug_log('alert_invalid_terms', array('region_term_id' => $region_term_id, 'comuna_term_id' => $comuna_term_id, 'user_id' => get_current_user_id()));
             wp_safe_redirect(TM_Helpers::get_account_page_url(array('tab' => 'alerts', 'tm_error' => 'invalid_terms')));
             exit;
         }
@@ -1131,6 +1134,7 @@ class TM_Public
             exit;
         }
         if (! TM_Helpers::is_subcategory_of_category($subcategory_id, $category_id) || ! TM_Helpers::is_comuna_of_region($comuna_id, $region_id)) {
+            TM_Helpers::debug_log('listing_invalid_terms', array('listing_id' => $listing_id, 'category_id' => $category_id, 'subcategory_id' => $subcategory_id, 'region_id' => $region_id, 'comuna_id' => $comuna_id, 'user_id' => $user_id));
             wp_safe_redirect(TM_Helpers::build_redirect_url($redirect_url, array('tm_error' => 'invalid_terms')));
             exit;
         }
@@ -1259,6 +1263,7 @@ class TM_Public
             }
             $uploaded = wp_handle_upload($file, array('test_form' => false, 'mimes' => $allowed_mimes));
             if (isset($uploaded['error'])) {
+                TM_Helpers::debug_log('listing_upload_failed', array('listing_id' => $listing_id, 'error' => sanitize_text_field((string) $uploaded['error'])));
                 return new WP_Error('tm_upload_error', $uploaded['error']);
             }
             $attachment = array('guid' => $uploaded['url'], 'post_mime_type' => $uploaded['type'], 'post_title' => sanitize_file_name(pathinfo($uploaded['file'], PATHINFO_FILENAME)), 'post_content' => '', 'post_status' => 'inherit');

@@ -2,6 +2,10 @@
 
 Todos los cambios relevantes de este plugin se documentan en este archivo.
 
+## [1.5.2] - 2026-03-20
+- Se agrega `TM_Helpers::debug_log()` condicionado a `WP_DEBUG`.
+- Logs técnicos mínimos para fallos de alertas (payload/usuario/correo), bloqueos por permisos y errores de upload.
+
 ## [1.5.1] - 2026-03-20
 - Hardening SQL preventivo en consultas admin/alertas con `wpdb->prepare` cuando aplica.
 - Se agrega este archivo `CHANGELOG.md` para trazabilidad de cambios.

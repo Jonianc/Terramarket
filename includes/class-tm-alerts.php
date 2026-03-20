@@ -57,11 +57,13 @@ class TM_Alerts
         $alert_id = (int) ($alert->id ?? 0);
         $user_id  = (int) ($alert->user_id ?? 0);
         if (! $alert_id || ! $user_id) {
+            TM_Helpers::debug_log('alerts_invalid_payload', array('alert_id' => $alert_id, 'user_id' => $user_id));
             return false;
         }
 
         $user = get_userdata($user_id);
         if (! $user || ! is_email($user->user_email)) {
+            TM_Helpers::debug_log('alerts_invalid_user', array('alert_id' => $alert_id, 'user_id' => $user_id));
             return false;
         }
 
@@ -113,6 +115,8 @@ class TM_Alerts
                 array('%s', '%s'),
                 array('%d')
             );
+        } else {
+            TM_Helpers::debug_log('alerts_mail_failed', array('alert_id' => $alert_id, 'user_id' => $user_id));
         }
 
         return (bool) $sent;

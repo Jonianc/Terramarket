@@ -3,7 +3,7 @@ Contributors: openai
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.5.1
+Stable tag: 1.5.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,6 +11,9 @@ Marketplace agro autónomo para WordPress.
 
 == Description ==
 Terramarket es un plugin base para construir un marketplace agro en WordPress.
+
+Versión 1.5.2:
+- logging técnico mínimo bajo WP_DEBUG para eventos críticos (alertas, permisos y uploads).
 
 Versión 1.5.1:
 - hardening SQL preventivo en consultas admin/alertas usando prepare cuando aplica.
@@ -57,6 +60,9 @@ Versión 1.1.0 (Bloque B):
 4. Usa el frontend standalone en `/{slug-base}/`.
 
 == Changelog ==
+= 1.5.2 =
+* Observabilidad: logs técnicos mínimos condicionados a WP_DEBUG para fallos críticos.
+
 = 1.5.1 =
 * Hardening SQL preventivo en consultas admin/alertas y trazabilidad con CHANGELOG.md.
 

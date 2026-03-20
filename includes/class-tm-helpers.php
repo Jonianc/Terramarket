@@ -294,6 +294,27 @@ class TM_Helpers
         return $normalized;
     }
 
+    public static function debug_log(string $event, array $context = array()): void
+    {
+        if (! defined('WP_DEBUG') || ! WP_DEBUG) {
+            return;
+        }
+
+        $safe_context = array();
+        foreach ($context as $key => $value) {
+            if (is_scalar($value) || null === $value) {
+                $safe_context[(string) $key] = $value;
+            }
+        }
+
+        $encoded = wp_json_encode($safe_context);
+        if (! is_string($encoded)) {
+            $encoded = '{}';
+        }
+
+        error_log('[Terramarket][' . sanitize_key($event) . '] ' . $encoded); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+    }
+
     public static function get_submit_form_url(): string
     {
         return admin_url('admin-post.php');
