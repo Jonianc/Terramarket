@@ -1,4 +1,47 @@
 jQuery(function ($) {
+  if ($.fn.wpColorPicker && $('.tm-color-field').length) {
+    $('.tm-color-field').wpColorPicker();
+  }
+
+  if (typeof wp !== 'undefined' && wp.media && $('.tm-media-select').length) {
+    $('.tm-media-select').on('click', function () {
+      const $button = $(this);
+      const $input = $($button.data('target-input'));
+      const $preview = $($button.data('target-preview'));
+      const frame = wp.media({
+        title: String($button.data('media-title') || ''),
+        button: { text: String($button.data('media-button') || '') },
+        multiple: false,
+        library: { type: 'image' }
+      });
+
+      frame.on('select', function () {
+        const selection = frame.state().get('selection').first();
+        if (!selection) {
+          return;
+        }
+        const attachment = selection.toJSON();
+        $input.val(String(attachment.id || 0));
+        const previewUrl = (attachment.sizes && attachment.sizes.thumbnail && attachment.sizes.thumbnail.url)
+          ? attachment.sizes.thumbnail.url
+          : String(attachment.url || '');
+        if (previewUrl) {
+          $preview.attr('src', previewUrl).removeClass('is-hidden');
+        }
+      });
+
+      frame.open();
+    });
+
+    $('.tm-media-remove').on('click', function () {
+      const $button = $(this);
+      const $input = $($button.data('target-input'));
+      const $preview = $($button.data('target-preview'));
+      $input.val('0');
+      $preview.attr('src', '').addClass('is-hidden');
+    });
+  }
+
   const categorySelect = $('#tm_category_term_id');
   const subcategorySelect = $('#tm_subcategory_term_id');
   const regionSelect = $('#tm_region_term_id');

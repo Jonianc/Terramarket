@@ -3,7 +3,7 @@
  * Plugin Name: Terramarket
  * Plugin URI: https://example.com/terramarket
  * Description: Marketplace agro autónomo para WordPress. Bloque E: pulido UI/UX final, responsive fino, accesibilidad base y mejoras de rendimiento.
- * Version: 1.5.4
+ * Version: 1.5.9
  * Author: OpenAI
  * Text Domain: terramarket
  * Domain Path: /languages
@@ -15,7 +15,7 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
-define('TM_VERSION', '1.5.4');
+define('TM_VERSION', '1.5.9');
 define('TM_PLUGIN_FILE', __FILE__);
 define('TM_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('TM_PLUGIN_URL', plugin_dir_url(__FILE__));
